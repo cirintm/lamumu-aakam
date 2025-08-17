@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lamumu.Image.Fun</title>
+<style>
+    body {
+        background-color: #121212;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #1e1e1e;
+        padding: 1rem;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #4CAF50;
+    }
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 1rem;
+    }
+    
+    .image-card {
+        background-color: #1e1e1e;
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem;
+        text-align: center;
+        width: 240px;
+        box-shadow: 0px 4px 8px rgba(0,0,0,0.4);
+    }
+    img {
+        max-width: 90%;
+        border-radius: 10px;
+    }
+    .buttons {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 0.5rem;
+    }
+    button {
+        background-color: transparent;
+        border: none;
+        color: #4CAF50;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    button:hover {
+        transform: scale(1.2);
+    }
+    .likes {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: #ccc;
+    }
+    .support {
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .support a {
+        color: #4CAF50;
+        text-decoration: none;
+        margin: 0 0.5rem;
+        transition: color 0.3s;
+    }
+    .support a:hover {
+        color: #66ff66;
+    }
+    .upload-btn {
+        display: block;
+        margin: 1rem auto;
+        padding: 0.5rem 1rem;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+    .upload-btn:hover {
+        background-color: #45a049;
+    }
+    .developer-credit {
+        position: absolute; 
+        top: 275px;  
+        right: 190px;  
+        font-size: 18px;
+        color: white;
+        font-family: Arial, sans-serif;
+        z-index: 9999;
+    }
+    .developer-credit a {
+        color: #4CAF50 !important;
+        text-decoration: none;
+    }
+</style>
+</head>
+<body>
+
+<header>LAMUMU COLLECTION</header>
+
+<div class="support">
+    <h3>Support Community</h3>
+    LAMUMU :
+    <a href="https://x.com/lamumudotxyz" target="_blank">X</a> 
+    <a href="https://discord.gg/lamumudotxyz" target="_blank">Discord</a>
+    <br><br>
+    COMMON :
+    <a href="https://x.com/commondotxyz" target="_blank">X</a>
+    <a href="https://landing.common.xyz/" target="_blank">Website</a>
+</div>
+
+<button class="upload-btn" onclick="document.getElementById('fileInput').click()">Add Image</button>
+<input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="uploadImage(event)">
+
+<div class="container" id="imageContainer">
+    <div class="image-card">
+        <img src="sample1.jpg" alt="Sample Image 1">
+        <div class="buttons">
+            <button onclick="downloadImage(this)">⬇</button>
+            <button onclick="likeImage(this)">❤️</button>
+            <button onclick="deleteImage(this)">🗑</button>
+        </div>
+        <div class="likes">0 Likes</div>
+    </div>
+    <div class="image-card">
+        <img src="sample2.jpg" alt="Sample Image 2">
+        <div class="buttons">
+            <button onclick="downloadImage(this)">⬇</button>
+            <button onclick="likeImage(this)">❤️</button>
+            <button onclick="deleteImage(this)">🗑</button>
+        </div>
+        <div class="likes">0 Likes</div>
+    </div>
+    <div class="image-card">
+        <img src="sample3.jpg" alt="Sample Image 3">
+        <div class="buttons">
+            <button onclick="downloadImage(this)">⬇</button>
+            <button onclick="likeImage(this)">❤️</button>
+            <button onclick="deleteImage(this)">🗑</button>
+        </div>
+        <div class="likes">0 Likes</div>
+    </div>
+    <div class="image-card">
+        <img src="sample4.jpg" alt="Sample Image 4">
+        <div class="buttons">
+            <button onclick="downloadImage(this)">⬇</button>
+            <button onclick="likeImage(this)">❤️</button>
+            <button onclick="deleteImage(this)">🗑</button>
+        </div>
+        <div class="likes">0 Likes</div>
+    </div>
+</div>
+
+<script>
+function downloadImage(button) {
+    let img = button.closest('.image-card').querySelector('img');
+    let link = document.createElement('a');
+    link.href = img.src;
+    link.download = 'downloaded_image.jpg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function likeImage(button) {
+    let likesDiv = button.closest('.image-card').querySelector('.likes');
+    let currentLikes = parseInt(likesDiv.innerText);
+    likesDiv.innerText = (currentLikes + 1) + " Likes";
+}
+
+function deleteImage(button) {
+    let imgCard = button.closest('.image-card');
+    imgCard.remove();
+}
+
+function uploadImage(event) {
+    let file = event.target.files[0];
+    if (file) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            let imgCard = document.createElement('div');
+            imgCard.classList.add('image-card');
+            imgCard.innerHTML = `
+                <img src="${e.target.result}" alt="Uploaded Image">
+                <div class="buttons">
+                    <button onclick="downloadImage(this)">⬇</button>
+                    <button onclick="likeImage(this)">❤️</button>
+                    <button onclick="deleteImage(this)">🗑</button>
+                </div>
+                <div class="likes">0 Likes</div>
+            `;
+            document.getElementById('imageContainer').appendChild(imgCard);
+        }
+        reader.readAsDataURL(file);
+    }
+}
+</script>
+
+<div class="developer-credit">
+    Developed by:  <a href="https://x.com/ciriyeck_goody" target="_blank">Goodyyy</a>
+</div>
+
+</body>
+</html>
