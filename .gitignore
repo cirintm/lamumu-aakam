@@ -52,8 +52,3 @@ logs
 
 # Supabase local development
 .supabase/
-
-# Legacy files (now using Vite)
-config.js
-script.js
-env-loader.js
