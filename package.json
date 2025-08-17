@@ -1,0 +1,26 @@
+{
+  "name": "lamumu-image-gallery",
+  "version": "1.0.0",
+  "description": "A modern, cloud-powered image gallery built with Vite, JavaScript, and Supabase",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite preview"
+  },
+  "keywords": [
+    "image-gallery",
+    "supabase",
+    "vite",
+    "javascript"
+  ],
+  "author": "Goodyyy",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.55.0"
+  }
+}

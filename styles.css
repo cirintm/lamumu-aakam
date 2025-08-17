@@ -125,3 +125,77 @@ button:hover {
   color: #4caf50 !important;
   text-decoration: none;
 }
+
+/* Loading and message styles */
+.loading,
+.empty-state {
+  text-align: center;
+  color: #ccc;
+  font-size: 1.2rem;
+  padding: 2rem;
+  width: 100%;
+}
+
+.message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  z-index: 10000;
+  max-width: 300px;
+  animation: slideIn 0.3s ease-out;
+}
+
+.error-message {
+  background-color: #f44336;
+  border: 1px solid #d32f2f;
+}
+
+.success-message {
+  background-color: #4caf50;
+  border: 1px solid #388e3c;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Upload button disabled state */
+.upload-btn:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+}
+
+.upload-btn:disabled:hover {
+  background-color: #666;
+}
+
+/* Drag and drop styles */
+.container.drag-over {
+  border: 2px dashed #4caf50;
+  background-color: rgba(76, 175, 80, 0.1);
+  border-radius: 10px;
+}
+
+.container.drag-over::before {
+  content: "Drop your image here";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #4caf50;
+  font-size: 1.5rem;
+  font-weight: bold;
+  pointer-events: none;
+  z-index: 1000;
+}

@@ -1,10 +1,7 @@
-// Initialize app when DOM is loaded
-document.addEventListener("DOMContentLoaded", function () {
-  loadImages();
-});
+import { supabase, CONFIG } from "./config.js";
 
 // Load images from Supabase
-async function loadImages() {
+export async function loadImages() {
   try {
     showLoadingState();
 
@@ -39,7 +36,7 @@ async function loadImages() {
 }
 
 // Create image card HTML
-function createImageCard(imageData) {
+export function createImageCard(imageData) {
   const container = document.getElementById("imageContainer");
   const imgCard = document.createElement("div");
   imgCard.classList.add("image-card");
@@ -59,21 +56,29 @@ function createImageCard(imageData) {
     </div>
     <div class="card-footer">
       <div class="buttons">
-        <button onclick="downloadImage(this)" title="Download">⬇</button>
-        <button onclick="likeImage(this)" title="Like">❤️</button>
-        <button onclick="deleteImage(this)" title="Delete">🗑</button>
+        <button class="download-btn" title="Download">⬇</button>
+        <button class="like-btn" title="Like">❤️</button>
+        <button class="delete-btn" title="Delete">🗑</button>
       </div>
       <div class="likes">${imageData.likes || 0} Likes</div>
     </div>
   `;
 
+  // Add event listeners
+  const downloadBtn = imgCard.querySelector(".download-btn");
+  const likeBtn = imgCard.querySelector(".like-btn");
+  const deleteBtn = imgCard.querySelector(".delete-btn");
+
+  downloadBtn.addEventListener("click", () => downloadImage(imgCard));
+  likeBtn.addEventListener("click", () => likeImage(imgCard));
+  deleteBtn.addEventListener("click", () => deleteImage(imgCard));
+
   container.appendChild(imgCard);
 }
 
 // Download image function
-async function downloadImage(button) {
+export async function downloadImage(imgCard) {
   try {
-    const imgCard = button.closest(".image-card");
     const img = imgCard.querySelector("img");
     const imageId = imgCard.dataset.imageId;
 
@@ -102,11 +107,11 @@ async function downloadImage(button) {
 }
 
 // Like image function
-async function likeImage(button) {
+export async function likeImage(imgCard) {
   try {
-    const imgCard = button.closest(".image-card");
     const imageId = imgCard.dataset.imageId;
     const likesDiv = imgCard.querySelector(".likes");
+    const likeBtn = imgCard.querySelector(".like-btn");
 
     // Get current likes count
     const { data: currentData, error: fetchError } = await supabase
@@ -137,9 +142,9 @@ async function likeImage(button) {
     likesDiv.textContent = `${newLikesCount} Likes`;
 
     // Add animation effect
-    button.style.transform = "scale(1.3)";
+    likeBtn.style.transform = "scale(1.3)";
     setTimeout(() => {
-      button.style.transform = "scale(1)";
+      likeBtn.style.transform = "scale(1)";
     }, 200);
   } catch (error) {
     console.error("Error liking image:", error);
@@ -147,13 +152,12 @@ async function likeImage(button) {
 }
 
 // Delete image function
-async function deleteImage(button) {
+export async function deleteImage(imgCard) {
   if (!confirm("Are you sure you want to delete this image?")) {
     return;
   }
 
   try {
-    const imgCard = button.closest(".image-card");
     const imageId = imgCard.dataset.imageId;
 
     // Get image data first
@@ -196,8 +200,7 @@ async function deleteImage(button) {
 }
 
 // Upload image function
-async function uploadImage(event) {
-  const file = event.target.files[0];
+export async function uploadImage(file) {
   if (!file) return;
 
   // Validate file
@@ -260,9 +263,6 @@ async function uploadImage(event) {
 
     hideUploadProgress();
     showSuccessMessage("Image uploaded successfully!");
-
-    // Clear file input
-    event.target.value = "";
   } catch (error) {
     console.error("Error uploading image:", error);
     showErrorMessage("Failed to upload image");
@@ -271,7 +271,7 @@ async function uploadImage(event) {
 }
 
 // Validate file function
-function validateFile(file) {
+export function validateFile(file) {
   // Check file type
   if (!CONFIG.allowedTypes.includes(file.type)) {
     showErrorMessage("Please select a valid image file (JPEG, PNG, GIF, WebP)");
@@ -289,37 +289,37 @@ function validateFile(file) {
 }
 
 // UI Helper functions
-function showLoadingState() {
+export function showLoadingState() {
   const container = document.getElementById("imageContainer");
   container.innerHTML = '<div class="loading">Loading images...</div>';
 }
 
-function hideLoadingState() {
+export function hideLoadingState() {
   const loadingEl = document.querySelector(".loading");
   if (loadingEl) {
     loadingEl.remove();
   }
 }
 
-function showEmptyState() {
+export function showEmptyState() {
   const container = document.getElementById("imageContainer");
   container.innerHTML =
     '<div class="empty-state">No images yet. Upload the first one!</div>';
 }
 
-function showUploadProgress() {
+export function showUploadProgress() {
   const uploadBtn = document.querySelector(".upload-btn");
   uploadBtn.disabled = true;
   uploadBtn.textContent = "Uploading...";
 }
 
-function hideUploadProgress() {
+export function hideUploadProgress() {
   const uploadBtn = document.querySelector(".upload-btn");
   uploadBtn.disabled = false;
   uploadBtn.textContent = "Add Image";
 }
 
-function showErrorMessage(message) {
+export function showErrorMessage(message) {
   // Remove existing messages
   const existingMessage = document.querySelector(".message");
   if (existingMessage) {
@@ -336,7 +336,7 @@ function showErrorMessage(message) {
   }, 5000);
 }
 
-function showSuccessMessage(message) {
+export function showSuccessMessage(message) {
   // Remove existing messages
   const existingMessage = document.querySelector(".message");
   if (existingMessage) {

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lamumu.Image.Fun</title>
+    <title>Lamumu Image Gallery</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -20,73 +20,11 @@
       <a href="https://landing.common.xyz/" target="_blank">Website</a>
     </div>
 
-    <button
-      class="upload-btn"
-      onclick="document.getElementById('fileInput').click()"
-    >
-      Add Image
-    </button>
-    <input
-      type="file"
-      id="fileInput"
-      accept="image/*"
-      style="display: none"
-      onchange="uploadImage(event)"
-    />
+    <button class="upload-btn">Add Image</button>
+    <input type="file" id="fileInput" accept="image/*" style="display: none" />
 
     <div class="container" id="imageContainer">
-      <div class="image-card">
-        <div class="image-container">
-          <img src="sample1.jpg" alt="Sample Image 1" />
-        </div>
-        <div class="card-footer">
-          <div class="buttons">
-            <button onclick="downloadImage(this)">⬇</button>
-            <button onclick="likeImage(this)">❤️</button>
-            <button onclick="deleteImage(this)">🗑</button>
-          </div>
-          <div class="likes">0 Likes</div>
-        </div>
-      </div>
-      <div class="image-card">
-        <div class="image-container">
-          <img src="sample2.jpg" alt="Sample Image 2" />
-        </div>
-        <div class="card-footer">
-          <div class="buttons">
-            <button onclick="downloadImage(this)">⬇</button>
-            <button onclick="likeImage(this)">❤️</button>
-            <button onclick="deleteImage(this)">🗑</button>
-          </div>
-          <div class="likes">0 Likes</div>
-        </div>
-      </div>
-      <div class="image-card">
-        <div class="image-container">
-          <img src="sample3.jpg" alt="Sample Image 3" />
-        </div>
-        <div class="card-footer">
-          <div class="buttons">
-            <button onclick="downloadImage(this)">⬇</button>
-            <button onclick="likeImage(this)">❤️</button>
-            <button onclick="deleteImage(this)">🗑</button>
-          </div>
-          <div class="likes">0 Likes</div>
-        </div>
-      </div>
-      <div class="image-card">
-        <div class="image-container">
-          <img src="sample4.jpg" alt="Sample Image 4" />
-        </div>
-        <div class="card-footer">
-          <div class="buttons">
-            <button onclick="downloadImage(this)">⬇</button>
-            <button onclick="likeImage(this)">❤️</button>
-            <button onclick="deleteImage(this)">🗑</button>
-          </div>
-          <div class="likes">0 Likes</div>
-        </div>
-      </div>
+      <!-- Images will be loaded dynamically from Supabase -->
     </div>
 
     <div class="developer-credit">
@@ -94,6 +32,6 @@
       <a href="https://x.com/ciriyeck_goody" target="_blank">Goodyyy</a>
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
