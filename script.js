@@ -27,13 +27,17 @@ function uploadImage(event) {
       let imgCard = document.createElement("div");
       imgCard.classList.add("image-card");
       imgCard.innerHTML = `
-                <img src="${e.target.result}" alt="Uploaded Image">
-                <div class="buttons">
-                    <button onclick="downloadImage(this)">⬇</button>
-                    <button onclick="likeImage(this)">❤️</button>
-                    <button onclick="deleteImage(this)">🗑</button>
+                <div class="image-container">
+                    <img src="${e.target.result}" alt="Uploaded Image">
                 </div>
-                <div class="likes">0 Likes</div>
+                <div class="card-footer">
+                    <div class="buttons">
+                        <button onclick="downloadImage(this)">⬇</button>
+                        <button onclick="likeImage(this)">❤️</button>
+                        <button onclick="deleteImage(this)">🗑</button>
+                    </div>
+                    <div class="likes">0 Likes</div>
+                </div>
             `;
       // Insert new image at the beginning (top) of the container
       let container = document.getElementById("imageContainer");
