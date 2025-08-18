@@ -70,12 +70,14 @@ main {
   text-decoration: none;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  overflow: hidden; /* Prevents button from breaking navbar */
 }
 
 .nav-btn:hover {
   background-color: #4caf50;
   color: white;
+  transform: scale(1.02); /* Subtle zoom effect */
 }
 
 .nav-btn-primary {
@@ -85,6 +87,7 @@ main {
 
 .nav-btn-primary:hover {
   background-color: #45a049;
+  transform: scale(1.02); /* Subtle zoom effect */
 }
 
 /* Support Section */
@@ -219,8 +222,9 @@ button {
   transition: transform 0.2s;
 }
 
-button:hover {
-  transform: scale(1.2);
+/* Image card buttons hover effect */
+.card-footer button:hover {
+  transform: scale(1.05);
 }
 
 .likes {
@@ -417,12 +421,14 @@ button:hover {
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
   margin-top: 0.5rem;
+  overflow: hidden; /* Prevents button from breaking container */
 }
 
 .auth-submit-btn:hover:not(:disabled) {
   background-color: #45a049;
+  transform: scale(1.02); /* Subtle zoom effect */
 }
 
 .auth-submit-btn:disabled {

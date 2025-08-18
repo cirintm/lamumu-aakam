@@ -9,15 +9,33 @@ const ImageCard = ({ image, currentUser, onLike, onDelete }) => {
 
   const handleDownload = async () => {
     try {
+      // Fetch the image as a blob to enable proper download
+      const response = await fetch(publicUrl);
+      if (!response.ok) throw new Error("Failed to fetch image");
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
       // Create download link
       const link = document.createElement("a");
+      link.href = url;
+      link.download = image.filename || `lamumu-image-${Date.now()}.jpg`;
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading image:", error);
+      // Fallback: try direct link method
+      const link = document.createElement("a");
       link.href = publicUrl;
-      link.download = image.filename || "downloaded_image.jpg";
+      link.download = image.filename || `lamumu-image-${Date.now()}.jpg`;
+      link.target = "_blank";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-    } catch (error) {
-      console.error("Error downloading image:", error);
     }
   };
 
