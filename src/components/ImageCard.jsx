@@ -1,4 +1,3 @@
-import React from "react";
 import { supabase, CONFIG } from "../config.js";
 
 const ImageCard = ({ image, currentUser, onLike, onDelete }) => {

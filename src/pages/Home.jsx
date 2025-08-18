@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { supabase, CONFIG } from "../config.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import ImageCard from "../components/ImageCard.jsx";
