@@ -1,9 +1,11 @@
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleSignOut = async () => {
     const { error } = await signOut();
@@ -12,16 +14,34 @@ const Navbar = () => {
     } else {
       navigate("/");
     }
+    setIsMenuOpen(false); // Close menu after sign out
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
 
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <Link to="/" className="nav-logo">
+        <Link to="/" className="nav-logo" onClick={closeMenu}>
           LAMUMU COLLECTION
         </Link>
 
-        <div className="nav-links">
+        {/* Mobile menu button */}
+        <button
+          className="mobile-menu-btn"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span className={`hamburger ${isMenuOpen ? "open" : ""}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+
+        <div className={`nav-links ${isMenuOpen ? "mobile-open" : ""}`}>
           {user ? (
             <div className="nav-user">
               <span className="nav-email">Welcome, {user.email}</span>
@@ -31,10 +51,14 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="nav-auth">
-              <Link to="/login" className="nav-btn">
+              <Link to="/login" className="nav-btn" onClick={closeMenu}>
                 Login
               </Link>
-              <Link to="/register" className="nav-btn nav-btn-primary">
+              <Link
+                to="/register"
+                className="nav-btn nav-btn-primary"
+                onClick={closeMenu}
+              >
                 Register
               </Link>
             </div>

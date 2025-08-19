@@ -21,6 +21,7 @@ main {
 .navbar {
   background-color: #1e1e1e;
   padding: 1rem 0;
+  position: relative;
 }
 
 .nav-container {
@@ -37,6 +38,46 @@ main {
   font-weight: bold;
   color: #4caf50;
   text-decoration: none;
+}
+
+/* Mobile menu button */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1001;
+}
+
+.hamburger {
+  width: 24px;
+  height: 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: #4caf50;
+  border-radius: 1px;
+  transition: all 0.3s ease;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
 }
 
 .nav-links {
@@ -72,6 +113,7 @@ main {
   font-size: 0.9rem;
   transition: all 0.3s ease;
   overflow: hidden; /* Prevents button from breaking navbar */
+  white-space: nowrap;
 }
 
 .nav-btn:hover {
@@ -88,6 +130,186 @@ main {
 .nav-btn-primary:hover {
   background-color: #45a049;
   transform: scale(1.02); /* Subtle zoom effect */
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 250px;
+    height: 100vh;
+    background-color: #1e1e1e;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding-top: 80px;
+    padding: 80px 1.5rem 1.5rem;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    transition: right 0.3s ease;
+    z-index: 1000;
+  }
+
+  .nav-links.mobile-open {
+    right: 0;
+  }
+
+  .nav-user,
+  .nav-auth {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .nav-email {
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px solid #333;
+    margin-bottom: 1rem;
+  }
+
+  .nav-btn {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+
+  .nav-logo {
+    font-size: 1.25rem;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0 0.75rem;
+  }
+
+  .nav-logo {
+    font-size: 1rem;
+  }
+
+  .nav-links {
+    width: 200px;
+    padding: 70px 1rem 1rem;
+  }
+
+  .nav-btn {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+/* Mobile responsive styles for content */
+@media (max-width: 768px) {
+  /* Home page mobile */
+  .home-page {
+    padding: 1rem 0.5rem;
+  }
+
+  /* Gallery mobile */
+  .container {
+    gap: 0.5rem;
+    padding: 0.5rem;
+    justify-content: space-around;
+  }
+
+  .image-card {
+    width: calc(50% - 0.5rem);
+    height: 280px;
+    margin: 0.25rem;
+    padding: 0.75rem;
+  }
+
+  /* Upload section mobile */
+  .upload-section {
+    margin-bottom: 1rem;
+  }
+
+  .upload-btn {
+    width: 100%;
+    max-width: 300px;
+    font-size: 0.9rem;
+    padding: 0.65rem 1.25rem;
+  }
+
+  /* Support section mobile */
+  .support {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .support h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .support a {
+    display: inline-block;
+    margin: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background-color: #2a2a2a;
+    border-radius: 3px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra small screens */
+  .home-page {
+    padding: 0.75rem 0.25rem;
+  }
+
+  .container {
+    gap: 0.25rem;
+    padding: 0.25rem;
+  }
+
+  .image-card {
+    width: calc(50% - 0.25rem);
+    height: 240px;
+    margin: 0.125rem;
+    padding: 0.5rem;
+  }
+
+  .upload-btn {
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem;
+  }
+
+  /* Card footer mobile */
+  .buttons {
+    gap: 0.5rem;
+  }
+
+  .card-footer button {
+    font-size: 1rem;
+  }
+
+  .likes {
+    font-size: 0.8rem;
+  }
+
+  /* Support section extra small */
+  .support {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .support h3 {
+    font-size: 0.9rem;
+  }
+
+  .support a {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.4rem;
+  }
 }
 
 /* Support Section */
@@ -538,4 +760,105 @@ button {
 
 .delete-btn:hover {
   transform: scale(1.2) !important;
+}
+
+/* Mobile responsive styles for authentication */
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 1rem 0.5rem;
+    min-height: calc(100vh - 150px);
+  }
+
+  .auth-card {
+    padding: 1.5rem;
+    max-width: 100%;
+    margin: 0 0.5rem;
+  }
+
+  .auth-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group input {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 0.875rem;
+  }
+
+  .auth-submit-btn {
+    font-size: 1rem;
+    padding: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 0.75rem 0.25rem;
+  }
+
+  .auth-card {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  .auth-card h2 {
+    font-size: 1.25rem;
+  }
+
+  .form-group {
+    gap: 0.75rem;
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+  }
+
+  .form-group input {
+    padding: 0.75rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .auth-submit-btn {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .auth-footer {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+  }
+}
+
+/* Mobile responsive for notifications */
+@media (max-width: 768px) {
+  .error-message,
+  .success-message {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    max-width: none;
+    margin: 0;
+    z-index: 10001;
+  }
+}
+
+/* Landscape mobile adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  .auth-container {
+    min-height: calc(100vh - 100px);
+    padding: 0.5rem;
+  }
+
+  .auth-card {
+    padding: 1rem;
+  }
+
+  .auth-card h2 {
+    margin-bottom: 0.75rem;
+  }
+
+  .form-group {
+    gap: 0.75rem;
+  }
 }
