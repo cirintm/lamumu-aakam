@@ -61,7 +61,7 @@ const Home = () => {
         .substring(2)}.${fileExt}`;
       const filePath = `uploads/${fileName}`;
 
-      // Upload to Supabase Storage
+      // Upload original file to Supabase Storage
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from(CONFIG.storageBucket)
         .upload(filePath, file);
@@ -83,7 +83,7 @@ const Home = () => {
             likes: 0,
             file_size: file.size,
             mime_type: file.type,
-            user_id: user.id, // Add user ownership
+            user_id: user.id,
           },
         ])
         .select()

@@ -1,11 +1,45 @@
+import React, { useState, useRef, useEffect } from "react";
 import { supabase, CONFIG } from "../config.js";
 
 const ImageCard = ({ image, currentUser, onLike, onDelete }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const imgRef = useRef();
+
   const {
     data: { publicUrl },
   } = supabase.storage
     .from(CONFIG.storageBucket)
     .getPublicUrl(image.storage_path);
+
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: "50px" }
+    );
+
+    if (imgRef.current) {
+      observer.observe(imgRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleImageLoad = () => {
+    setIsLoaded(true);
+  };
+
+  const handleImageError = () => {
+    setHasError(true);
+    setIsLoaded(true);
+  };
 
   const handleDownload = async () => {
     try {
@@ -53,15 +87,38 @@ const ImageCard = ({ image, currentUser, onLike, onDelete }) => {
 
   return (
     <div className="image-card">
-      <div className="image-container">
-        <img
-          src={publicUrl}
-          alt={image.alt_text || "Uploaded Image"}
-          onError={(e) => {
-            e.target.src =
-              "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBmb3VuZDwvdGV4dD48L3N2Zz4=";
-          }}
-        />
+      <div className="image-container" ref={imgRef}>
+        {/* Loading placeholder */}
+        {!isLoaded && (
+          <div className="image-placeholder">
+            <div className="loading-spinner"></div>
+            <span>Loading...</span>
+          </div>
+        )}
+
+        {/* Lazy loaded image */}
+        {isInView && (
+          <img
+            src={hasError ? null : publicUrl}
+            alt={image.alt_text || "Uploaded Image"}
+            className={`image ${isLoaded ? "loaded" : "loading"}`}
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+            loading="lazy"
+            style={{
+              opacity: isLoaded ? 1 : 0,
+              transition: "opacity 0.3s ease",
+            }}
+          />
+        )}
+
+        {/* Error fallback */}
+        {hasError && (
+          <div className="image-error">
+            <span>❌</span>
+            <span>Failed to load image</span>
+          </div>
+        )}
       </div>
       <div className="card-footer">
         <div className="buttons">
